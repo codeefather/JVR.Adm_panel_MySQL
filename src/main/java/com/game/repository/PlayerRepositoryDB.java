@@ -23,7 +23,7 @@ public class PlayerRepositoryDB implements IPlayerRepository {
         properties.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
         properties.put(Environment.URL, "jdbc:mysql://localhost:3306/rpg");
         properties.put(Environment.USER, "root");
-        properties.put(Environment.PASS, "Cegth#942");
+        properties.put(Environment.PASS, "");
         properties.put(Environment.HBM2DDL_AUTO, "update");
 
         sessionFactory = new Configuration().
