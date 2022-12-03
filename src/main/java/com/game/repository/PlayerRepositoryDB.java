@@ -20,8 +20,8 @@ public class PlayerRepositoryDB implements IPlayerRepository {
     public PlayerRepositoryDB() {
         Properties properties = new Properties();
         properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
-        properties.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
-        properties.put(Environment.URL, "jdbc:mysql://localhost:3306/rpg");
+        properties.put(Environment.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
+        properties.put(Environment.URL, "jdbc:p6spy:mysql://localhost:3306/rpg");
         properties.put(Environment.USER, "root");
         properties.put(Environment.PASS, "Cegth#942");
         properties.put(Environment.HBM2DDL_AUTO, "update");
@@ -62,17 +62,29 @@ public class PlayerRepositoryDB implements IPlayerRepository {
 
     @Override
     public Player update(Player player) {
-        return null;
+        try(Session session = sessionFactory.openSession()){
+            Transaction transaction = session.beginTransaction();
+            session.update(player);
+            transaction.commit();
+            return player;
+        }
     }
 
     @Override
     public Optional<Player> findById(long id) {
-        return Optional.empty();
+        try (Session session = sessionFactory.openSession()){
+            Player player = session.find(Player.class, id);
+            return Optional.of(player);
+        }
     }
 
     @Override
     public void delete(Player player) {
-
+        try(Session session = sessionFactory.openSession()){
+            Transaction transaction = session.beginTransaction();
+            session.remove(player);
+            transaction.commit();
+        }
     }
 
 //    @PreDestroy

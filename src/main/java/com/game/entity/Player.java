@@ -11,7 +11,7 @@ import java.util.Date;
 @NamedQuery(name = "getAllAccountPlayers", query = "SELECT count(p) FROM Player p")
 public class Player {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(nullable=false)
     private Long id;
     @Column(nullable=false, length = 12)
